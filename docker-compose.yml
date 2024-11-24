@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  deliver-jokes:
+    build:
+      context: ./deliver-jokes
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      MONGO_URI: mongodb+srv://venugiperera11:1g9QTCYS1e2B1Tal@cluster0.6bodfn8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+  submit-jokes:
+    build:
+      context: ./submit-jokes
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      MONGO_URI: mongodb+srv://venugiperera11:1g9QTCYS1e2B1Tal@cluster0.6bodfn8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+  moderate-jokes:
+    build:
+      context: ./moderate-jokes
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    environment:
+      JWT_SECRET: your_jwt_secret
+
+  frontend:
+    build:
+      context: ./jokes-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:3000
